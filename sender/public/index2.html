@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+         
+    <title>Sender</title>
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    
+  </body>
+  <script>
+  	window.onload = () => {
+  		const val = document.getElementById('text');
+		console.log(val.value);
+
+		if (window.addEventListener) {
+
+			window.addEventListener('message', (e) => {
+
+				if (e.origin === 'http://192.168.0.102:3005') {
+					let task = e.data['task'];
+					let msg;
+
+					switch (task) {
+
+						case 'dataheight':
+
+							msg = {'task': 'dataheight', 'val': val};
+							e.source.postMessage(msg, e.origin);
+							break;
+
+						default:
+							let unknownMsg = 'я хз, что тебе нужно';
+							msg = {'task': 'unknown', 'val': unknownMsg};
+							e.source.postMessage(msg, e.origin);
+							break;
+					}
+				}
+
+			});
+		}
+
+		// window.addEventListener('message', (e) => {
+
+		// 	let msg = {'task': 'dataheight'};
+
+		// 	e.source.postMessage(msg, e.origin);
+		// });
+  	}
+  </script>
+</html>

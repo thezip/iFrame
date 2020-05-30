@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+         
+    <title>Sender</title>
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    
+  </body>
+  <script>
+  	window.onload = () => {      
+  		let val = document.getElementById('text');
+      
+      window.addEventListener('message', (e) => {
+        if (e.origin === 'http://localhost:3005'){
+
+          let msg = {'task': val.value};
+          e.source.postMessage(msg, e.origin);
+        }
+      });
+  	}
+  </script>
+</html>
