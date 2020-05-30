@@ -1,11 +1,20 @@
-import React from 'react';
-const App = () => {  
-  return (
-    <div className='App'>
-      <h2>[Sender]</h2>
-      <input id='text' type='text' placeholder='Enter text...' size='30'/>
-    </div>
-  );
-}
+import React, {Component} from 'react';
+export default class App extends Component {
+  render() {   
 
-export default App;
+    window.addEventListener('message', (e) => {
+      if (e.origin === 'http://localhost:3005'){
+
+        let msg = {'task': this.refs.ts.value};
+        e.source.postMessage(msg, e.origin);
+      }
+    });
+
+    return (
+      <div className='App'>
+        <h2>[Sender]</h2>
+        <input id='text' ref='ts' type='text' placeholder='Enter text...' size='30'/>
+      </div>
+    );
+  }
+}
